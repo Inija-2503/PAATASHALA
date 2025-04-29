@@ -1,48 +1,194 @@
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>contact form</title>
-    <link rel="stylesheet" href="../styles/feedback.css" />
-  </head>
-  <body>
+    
+
+    <style>
+
+    * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Outfit', sans-serif;
+    background: #0f0f0f; /* Dark background to match PATASHALA theme */
+    color: white;
+}
+
+.contact-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 50px 20px;
+    position: relative;
+    background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
+}
+
+.contact::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-image: url('../feedback form/assests/WhatsApp Image 2024-05-19 at 11.14.31 PM (1).jpeg');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.1;
+    z-index: 0;
+}
+
+.contact-left {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 20px;
+    z-index: 1;
+}
+.contact-left-title h2 {
+    font-weight: 700;
+    font-size: 40px;
+    margin-bottom: 5px;
+    background: linear-gradient(270deg, #fa6d86, #d10fe2); /* Apply gradient */
+    -webkit-background-clip: text; /* Webkit-specific clip for text */
+    background-clip: text; /* Standard background-clip for other browsers */
+    color: transparent; /* Make text color transparent to reveal gradient */
+}
+
+.contact-left-title hr {
+    border: none;
+    width: 120px;
+    height: 5px;
+    background: linear-gradient(270deg, #fa6d86, #ff994f); /* Apply gradient */
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+
+
+.contact-inputs {
+    width: 400px;
+    height: 50px;
+    border: none;
+    outline: none;
+    padding-left: 25px;
+    font-weight: 500;
+    color: #ffffff;
+    background: #1f1f1f;
+    border-radius: 50px;
+    font-size: 16px;
+}
+.contact-inputs:hover{
+    transform: scale(1.05);
+    box-shadow: 0 0 10px #fa6d86;
+} 
+
+.contact-left textarea.contact-inputs {
+    height: 140px;
+    padding-top: 20px;
+    border-radius: 20px;
+    resize: none;
+}
+
+.contact-inputs:focus {
+    border: 2px solid #160b02;
+}
+
+.contact-inputs::placeholder {
+    color: #aaa;
+}
+
+.contact-left button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px 30px;
+    font-size: 16px;
+    color: #fff;
+    gap: 10px;
+    border: none;
+    border-radius: 50px;
+    background: linear-gradient(270deg, #fa6d86, #ff994f);
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.contact-left button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 10px #fa6d86;
+}
+
+.contact-right img {
+    width: 500px;
+    z-index: 1;
+}
+
+@media (max-width: 800px) {
+    .contact-container {
+        flex-direction: column;
+        text-align: center;
+    }
+    .contact-inputs {
+        width: 80vw;
+    }
+    .contact-right {
+        display: none;
+    }
+}
+     
+        /* Make sure the container is relative for proper positioning */
+        .contact-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+        }
+
+        /* Curved corner containers with gradient colors */
+        .top-left-corner, .bottom-right-corner {
+            position: absolute;
+            width: 150px;  /* Adjust the width for the curved line */
+            height: 8px;  /* Adjust the height to make it a curved line shape */
+            background: linear-gradient(270deg, #fa6d86, #ff994f); /* Gradient color */
+            border-top-left-radius: 50px;  /* This creates the curved effect */
+            border-bottom-right-radius: 50px;  /* This creates the other curved effect */
+        }
+
+        /* Position the top-left corner */
+        .top-left-corner {
+            top: 10px;
+            left: 10px;
+        }
+
+        /* Position the bottom-right corner */
+        .bottom-right-corner {
+            bottom: 10px;
+            right: 10px;
+        }
+    </style>
+
+</head>
+<body>
     <div class="contact-container">
-      <form
-        action="https://api.web3forms.com/submit"
-        method="POST"
-        class="contact-left"
-      >
-        ''
-        <div class="contact-left-title">
-          <h2>Get in touch</h2>
-          <hr />
-        </div>
-        <input
-          type="hidden"
-          name="access_key"
-          value="d2b50f75-25f4-46b5-9a75-6d89eaf6f706"
-        />
-        <input
-          type="text"
-          name="name"
-          placeholder="Your name"
-          class="contact-inputs"
-          required
-        />
-        <input
-          type="email"
-          name="email"
-          placeholder="Your email"
-          class="contact-inputs"
-          required
-        />
-        <textarea
-          name="message"
-          placeholder="Your message"
-          class="contact-inputs"
-        ></textarea>
-        <button type="submit">Submit<img src="" alt="" /></button>
-      </form>
+        <!-- Curved corners with gradient colors -->
+        <div class="top-left-corner"></div>
+        <div class="bottom-right-corner"></div>
+
+        <form action="https://api.web3forms.com/submit" method="POST" class="contact-left">
+            <div class="contact-left-title">
+                <h2> Get in touch</h2>
+                <hr>
+            </div>
+            <input type="hidden" name="access_key" value="d2b50f75-25f4-46b5-9a75-6d89eaf6f706">
+            <input type="text" name="name" placeholder="Your name" class="contact-inputs" required>
+            <input type="email" name="email" placeholder="Your email" class="contact-inputs" required>
+            <textarea name="message" placeholder="Your message" class="contact-inputs"></textarea>
+            <button type="submit">Submit<img src="" alt=""></button>
+        </form>
     </div>
-  </body>
+</body>
 </html>
