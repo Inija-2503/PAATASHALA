@@ -19,10 +19,19 @@ timeDisplay.textContent = `${Math.floor(fakeDuration / 60)}:${Math.floor(
 )}`;
 
 sounds.forEach(sound => {
-  sound.addEventListener("click", function() {
+  sound.addEventListener("click", function () {
     song.src = this.getAttribute("data-sound");
     video.src = this.getAttribute("data-video");
-    checkPlaying(song);
+
+    // Restart everything fresh
+    song.pause();
+    song.currentTime = 0;
+    video.pause();
+    video.currentTime = 0;
+
+    play.src = "./svg/pause.svg"; // Update to show pause
+    song.play();
+    video.play();
   });
 });
 
