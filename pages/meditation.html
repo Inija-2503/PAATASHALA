@@ -4,34 +4,217 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600,700" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat:400,600,700"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="../styles/style.css" />
     <title></title>
     <style>
-      .play-pause-container {
-        position: relative;
-        width: 50px;
-        height: 50px;
+      * {
+        box-sizing: border-box;
       }
-      .play, .pause {
+
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        font-family: "Montserrat", sans-serif;
+      }
+
+      .app {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .vid-container video {
         position: absolute;
         top: 0;
         left: 0;
+        object-fit: cover;
         width: 100%;
         height: 100%;
+        z-index: -1;
+      }
+
+      .app-header {
+        text-align: center;
+        color: white;
+        margin-bottom: 20px;
+        z-index: 2;
+      }
+
+      .app-subtitle {
+        font-weight: 400;
+      }
+
+      .time-select {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        position: absolute;
+        left: 20px;
+        top: 20%;
+        z-index: 2;
+      }
+
+      .time-select button {
+        padding: 10px 20px;
+        background: transparent;
+        border: 2px solid white;
+        color: white;
+        font-size: 12px;
         cursor: pointer;
+      }
+
+      .controller-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .bottom-right-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        z-index: 2;
+      }
+
+      .player-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .controls {
+        position: relative;
+        width: 253px;
+        height: 253px;
+        margin-bottom: 20px;
+      }
+
+      .circle-container {
+        position: relative;
+        width: 100%;
+        height: 100%;
+      }
+
+      .play-pause-container {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 50px;
+        height: 50px;
+        cursor: pointer;
+      }
+
+      .play,
+      .pause {
+        position: absolute;
+        width: 100%;
+        height: 100%;
         transition: opacity 0.3s ease;
       }
+
       .pause {
         opacity: 0;
       }
+
       .playing .play {
         opacity: 0;
       }
+
       .playing .pause {
         opacity: 1;
       }
-      
+
+      .replay {
+        cursor: pointer;
+        width: 30px;
+        margin-top: 10px;
+        margin-bottom: 20px;
+      }
+
+      .time-display {
+        color: white;
+        font-size: 24px;
+        margin-top: 10px;
+      }
+
+      .sound-picker {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        margin-top: 20px;
+      }
+
+      .sound-picker button {
+        background: transparent;
+        border: none;
+        color: white;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .sound-picker img {
+        width: 50px;
+        height: 50px;
+      }
+
+      .sound-picker span {
+        margin-top: 5px;
+      }
+      @media (max-width: 768px) {
+        .app {
+          flex-direction: column; /* Ensure column layout on smaller screens */
+          align-items: center; /* Center items horizontally */
+          justify-content: flex-start; /* Align items to the top, adjust as needed */
+          padding-top: 10px; /* Add some top padding for spacing */
+        }
+
+        .time-select {
+          position: static; /* Flow with the document */
+          margin: 10px 0; /* Add some top and bottom margin */
+          align-self: center; /* Center the time select buttons */
+        }
+
+        .controller-wrapper {
+          /* Already column, but ensure centering */
+          align-items: center;
+        }
+
+        .bottom-right-container {
+          /* Already column, but ensure centering */
+          align-items: center;
+          margin-top: 10px;
+          padding-left: 30px; /* Add some space above the controls */
+        }
+
+        .sound-picker {
+          margin-top: 10px; /* Add more space above the sound picker */
+        }
+      }
+
+      /* Keep the existing rule for very small screens if needed */
+      @media (max-width: 800px) {
+        .app-header {
+          display: flex;
+          flex-direction: column;
+        }
+      }
     </style>
   </head>
   <body>
@@ -40,101 +223,158 @@
         <h1>Mindful Moments</h1>
         <p class="app-subtitle">In stillness, you meet your true self.</p>
       </header>
-      
 
       <div class="vid-container">
         <video loop autoplay muted>
-          <source src="../assets/video/beach.mp4" type="video/mp4">
+          <source src="../assets/video/beach.mp4" type="video/mp4" />
         </video>
       </div>
       <div class="app-content">
         <div class="time-select">
-          
           <button data-time="300" class="medium-mins">5 Minutes</button>
           <button data-time="600" class="long-mins">10 Minutes</button>
           <button data-time="900" class="extra-long-mins">15 Minutes</button>
           <button data-time="1200" class="short-mins">20 Minutes</button>
         </div>
-      
-        <div class="bottom-right-container">
-      <div class="player-container">
-        <audio class="song">
-          <audio src="beach.mp3" autoplay></audio>
-          <source src="../assets/sounds/beach.mp3" type="audio/mp3">
-          <source src="../assets/sounds/rain.mp3" type="audio/mp3">
-          <source src="../assets/sounds/healing-meditation-ringing-background-music-for-meditation-200223.mp3" type="audio/mp3">
-          <source src="../assets/sounds/spiritual-meditation-30-mins-201945.mp3" type="audio/mp3">
-          Your browser does not support the audio element.
-        </audio>
-        
-        <div class="controls">
-          <div class="circle-container">
-            <svg class="track-outline" width="253" height="253" viewBox="0 0 453 453" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="126.5" cy="126.5" r="116.5" stroke="white" stroke-width="10"/>
-            </svg>
-            <svg class="moving-outline" width="253" height="253" viewBox="0 0 453 453" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="126.5" cy="126.5" r="116.5" stroke="#018EBA" stroke-width="10"/>
-            </svg>
-        
-            <div class="play-pause-container">
-              <img src="../assets/images/play.svg" class="play" alt="Play button">
-              <img src="../assets/images/pause.svg" class="pause" alt="Pause button">
+
+        <div class="controller-wrapper">
+          <div class="bottom-right-container">
+            <div class="player-container">
+              <audio class="song">
+                <audio src="beach.mp3" autoplay></audio>
+                <source src="../assets/sounds/beach.mp3" type="audio/mp3" />
+                <source src="../assets/sounds/rain.mp3" type="audio/mp3" />
+                <source
+                  src="../assets/sounds/healing-meditation-ringing-background-music-for-meditation-200223.mp3"
+                  type="audio/mp3"
+                />
+                <source
+                  src="../assets/sounds/spiritual-meditation-30-mins-201945.mp3"
+                  type="audio/mp3"
+                />
+                Your browser does not support the audio element.
+              </audio>
+
+              <div class="controls">
+                <svg
+                  class="track-outline"
+                  width="253"
+                  height="253"
+                  viewBox="0 0 253 253"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <circle
+                    cx="126.5"
+                    cy="126.5"
+                    r="116.5"
+                    stroke="white"
+                    stroke-width="10"
+                  />
+                </svg>
+                <svg
+                  class="moving-outline"
+                  width="253"
+                  height="253"
+                  viewBox="0 0 253 253"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <circle
+                    cx="126.5"
+                    cy="126.5"
+                    r="116.5"
+                    stroke="#018EBA"
+                    stroke-width="10"
+                  />
+                </svg>
+
+                <div class="play-pause-container">
+                  <img
+                    src="../assets/images/play.svg"
+                    class="play"
+                    alt="Play button"
+                  />
+                  <img
+                    src="../assets/images/pause.svg"
+                    class="pause"
+                    alt="Pause button"
+                  />
+                </div>
+              </div>
+
+              <!-- Added margin-top to separate replay button from timer -->
+              <img
+                src="../assets/images/replay.svg"
+                class="replay"
+                alt="Replay button"
+              />
             </div>
+
+            <h3 class="time-display">0:00</h3>
           </div>
-          
-          <img src="../assets/images/replay.svg" class="replay" alt="Replay button">
+
+          <div class="sound-picker">
+            <button
+              data-sound="../assets/sounds/beach.mp3"
+              data-video="../assets/video/beach.mp4"
+            >
+              <img src="../assets/images/ocean.png" alt="Beach sound" />
+              <span>Ocean</span>
+            </button>
+            <button
+              data-sound="../assets/sounds/healing-meditation-ringing-background-music-for-meditation-200223.mp3"
+              data-video="../assets/video/bell.mp4"
+            >
+              <img
+                src="../assets/images/Meditation bell.png"
+                alt="Meditation bells"
+              />
+              <span>Bells</span>
+            </button>
+            <button
+              data-sound="../assets/sounds/rain.mp3"
+              data-video="../assets/video/rain.mp4"
+            >
+              <img src="../assets/images/rain.png" alt="Rain sound" />
+              <span>Rain</span>
+            </button>
+            <button
+              data-sound="../assets/sounds/spiritual-meditation-30-mins-201945.mp3"
+              data-video="../assets/video/om.mp4"
+            >
+              <img src="../assets/images/om.png" alt="Om meditation" />
+              <span>Om</span>
+            </button>
+          </div>
         </div>
-        
-        
-        <h3 class="time-display">0:00</h3>
-      </div>
-      
-      <div class="sound-picker">
-      
-        <button data-sound="../assets/sounds/beach.mp3" data-video="../assets/video/beach.mp4">
-          <img src="../assets/images/ocean.png" alt="Beach sound">
-          <span>Ocean</span>
-        </button>
-        <button data-sound="../assets/sounds/healing-meditation-ringing-background-music-for-meditation-200223.mp3" data-video="../assets/video/bell.mp4">
-          <img src="../assets/images/Meditation bell.png" alt="Meditation bells">
-          <span>Bells</span>
-        <button data-sound="../assets/sounds/rain.mp3" data-video="../assets/video/rain.mp4">
-          <img src="../assets/images/rain.png" alt="Rain sound">
-          <span>Rain</span>
-        </button>
-        
-        </button>
-        <button data-sound="../assets/sounds/spiritual-meditation-30-mins-201945.mp3" data-video="../assets/video/om.mp4">
-          <img src="../assets/images/om.png" alt="Om meditation">
-          <span>Om</span>
-        </button>
       </div>
     </div>
-  </div>
-</div>
     <script src="../js/meditation.js"></script>
     <script>
       // Add this to your meditation.js file or include it here
-      document.addEventListener('DOMContentLoaded', function() {
-        const playPauseContainer = document.querySelector('.play-pause-container');
-        const playBtn = document.querySelector('.play');
-        const pauseBtn = document.querySelector('.pause');
-        const audio = document.querySelector('.song');
-        
+      document.addEventListener("DOMContentLoaded", function () {
+        const playPauseContainer = document.querySelector(
+          ".play-pause-container"
+        );
+        const playBtn = document.querySelector(".play");
+        const pauseBtn = document.querySelector(".pause");
+        const audio = document.querySelector(".song");
+
         // Toggle play/pause
-        playPauseContainer.addEventListener('click', function() {
+        playPauseContainer.addEventListener("click", function () {
           if (audio.paused) {
             audio.play();
-            playPauseContainer.classList.add('playing');
+            playPauseContainer.classList.add("playing");
           } else {
             audio.pause();
-            playPauseContainer.classList.remove('playing');
+            playPauseContainer.classList.remove("playing");
           }
         });
-        
+
         // Update button state when audio ends
-        audio.addEventListener('ended', function() {
-          playPauseContainer.classList.remove('playing');
+        audio.addEventListener("ended", function () {
+          playPauseContainer.classList.remove("playing");
         });
       });
     </script>
