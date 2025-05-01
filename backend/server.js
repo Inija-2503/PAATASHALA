@@ -9,6 +9,12 @@ require("dotenv").config(); // for MongoDB URI
 // Middleware
 app.use(cors());
 app.use(express.json());
+
+// Redirect root to sign-in page
+app.get("/", (req, res) => {
+  res.redirect("/pages/sign.html"); // assuming your sign-in page is at '/signin'
+});
+
 app.use(express.static("frontend")); // serve HTML/CSS/JS from public folder
 
 const PORT = process.env.PORT || 3000;
