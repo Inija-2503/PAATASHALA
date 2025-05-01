@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Profile - Patashala</title>
+  <link rel="stylesheet" href="../profile.css" />
+</head>
+<body>
+  <nav class="navbar">
+    <div class="navbar__container">
+      <a href="../index.html" id="navbar__logo">
+        <i class="fas fa-gem"></i> PATASHALA
+      </a>
+      <div class="navbar__toggle" id="mobile-menu">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </div>
+      <ul class="navbar__menu">
+        <li class="navbar__item">
+          <a href="../index.html" class="navbar__links">Home</a>
+        </li>
+        <li class="navbar__item">
+          <a href="./community.html" class="navbar__links">Community</a>
+        </li>
+        <li class="navbar__item">
+          <a href="./lobby.html" class="navbar__links">Focus Room</a>
+        </li>
+        <li class="navbar__item">
+          <a href="./meditation.html" class="navbar__links">Meditation</a>
+        </li>
+        <li class="navbar__item">
+          <a href="./feedback.html" class="navbar__links">Feedback</a>
+        </li>
+        <li class="navbar__btn">
+          <a href="./profile.html" class="button">Profile</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div class="profile-container">
+    <form id="profile-form">
+      <h2>Create Your Profile</h2>
+        <input type="file" id="profilePic" accept="image/*">
+        <button id="uploadBtn" onclick="document.getElementById('profilePic').click();">Choose Profile Picture</button>
+      <input type="file" id="profilePic" accept="image/*" />
+      <input type="text" id="name" placeholder="Name" required />
+      <input type="email" id="email" placeholder="Email" required />
+      <textarea id="bio" placeholder="Write a short bio..."></textarea>
+
+      <button type="submit">Save Profile</button>
+    </form>
+
+    <div id="profile-display" style="display: none;">
+      <h2>Profile Created</h2>
+      <img id="displayPic" class="profile-pic" />
+      <p><strong>Name:</strong> <span id="displayName"></span></p>
+      <p><strong>Email:</strong> <span id="displayEmail"></span></p>
+      <p><strong>Bio:</strong> <span id="displayBio"></span></p>
+      <button onclick="editProfile()">Edit Profile</button>
+      <button id="logoutBtn">Logout</button>
+    </div>
+  </div>
+
+  <script src="js/profile.js"></script>
+</body>
+</html>
