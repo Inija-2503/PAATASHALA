@@ -9,16 +9,10 @@
       <div class="login-html">
         <label class="tab">Sign Up</label>
         <div class="login-form">
-          <form action="/register" method="POST" class="sign-up-htm">
+          <form id="signup-form" class="sign-up-htm">
             <div class="group">
               <label for="user" class="label">Username</label>
-              <input
-                id="user"
-                name="username"
-                type="text"
-                class="input"
-                required
-              />
+              <input id="user" name="name" type="text" class="input" required />
             </div>
             <div class="group">
               <label for="pass" class="label">Password</label>
@@ -62,4 +56,40 @@
       </div>
     </div>
   </body>
+  <script>
+    document
+      .getElementById("signup-form")
+      .addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const name = document.getElementById("user").value;
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("pass").value;
+        const confirmPassword = document.getElementById("repeat-pass").value;
+
+        if (password !== confirmPassword) {
+          alert("Passwords do not match!");
+          return;
+        }
+
+        try {
+          const res = await fetch("/api/auth/signup", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name, email, password }),
+          });
+
+          const data = await res.json();
+          if (res.ok) {
+            alert("Sign-up successful!");
+            window.location.href = "/index.html";
+          } else {
+            alert(data.message || "Sign-up failed");
+          }
+        } catch (err) {
+          console.error(err);
+          alert("Something went wrong.");
+        }
+      });
+  </script>
 </html>
