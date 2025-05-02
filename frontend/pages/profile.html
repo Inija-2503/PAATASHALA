@@ -6,7 +6,7 @@
   <title>Profile - Patashala</title>
   <link rel="stylesheet" href="../styles/profile.css" />
   
-</head>
+</head> 
 <body>
   <nav class="navbar">
     <div class="navbar__container">
@@ -43,9 +43,10 @@
   <div class="profile-container">
     <form id="profile-form">
       <h2>Create Your Profile</h2>
-        <input type="file" id="profilePic" accept="image/*">
-        <button id="uploadBtn" onclick="document.getElementById('profilePic').click();">Choose Profile Picture</button>
-      <input type="file" id="profilePic" accept="image/*" />
+      <input type="file" id="profilePic" accept="image/*" style="display: none;" />
+      <button type="button" id="uploadBtn">Choose Profile Picture</button>
+      <span id="fileName">No file chosen</span>
+      
       <input type="text" id="name" placeholder="Name" required />
       <input type="email" id="email" placeholder="Email" required />
       <textarea id="bio" placeholder="Write a short bio..."></textarea>
