@@ -27,19 +27,9 @@ mongoose
 
 // User Model
 const userSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-  },
-  email: {
-    type: String,
-    unique: true,
-    required: true,
-  },
-  password: {
-    type: String,
-    required: true,
-  },
+  name: { type: String, required: true },
+  email: { type: String, unique: true, required: true },
+  password: { type: String, required: true },
 });
 
 const User = mongoose.model("User", userSchema);
@@ -58,7 +48,6 @@ class createError extends Error {
 const signup = async (req, res, next) => {
   try {
     const { name, email, password, confirmPassword } = req.body;
-    console.log("Received signup data:", req.body);
 
     // Check if passwords match
     if (password !== confirmPassword) {
@@ -75,7 +64,7 @@ const signup = async (req, res, next) => {
     let hashedPassword;
     try {
       hashedPassword = await bcrypt.hash(password, 12);
-      console.log("Password hashed successfully");
+      // console.log("Password hashed successfully");
     } catch (hashError) {
       console.error("Error hashing password:", hashError);
       return next(new createError("Error hashing password", 500));
@@ -89,7 +78,7 @@ const signup = async (req, res, next) => {
         email,
         password: hashedPassword,
       });
-      console.log("User created successfully");
+      // console.log("User created successfully");
     } catch (createUserError) {
       console.error("Error creating user:", createUserError);
       return next(new createError("Error creating user", 500));
@@ -101,9 +90,9 @@ const signup = async (req, res, next) => {
       token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, {
         expiresIn: process.env.JWT_EXPIRES_IN,
       });
-      console.log("JWT token generated successfully");
+      // console.log("JWT token generated successfully");
     } catch (jwtError) {
-      console.error("Error generating JWT:", jwtError);
+      // console.error("Error generating JWT:", jwtError);
       return next(new createError("Error generating JWT", 500));
     }
 
@@ -114,7 +103,7 @@ const signup = async (req, res, next) => {
       token,
     });
   } catch (error) {
-    console.error("Error during signup:", error);
+    // console.error("Error during signup:", error);
     next(error);
   }
 };
@@ -157,6 +146,31 @@ const signin = async (req, res, next) => {
 // Routes
 app.post("/api/auth/pages/signup", signup);
 app.post("/api/auth/pages/signin", signin);
+
+// Middleware to protect route and extract user
+const protect = async (req, res, next) => {
+  const token = req.headers.authorization?.split(" ")[1]; // "Bearer <token>"
+  if (!token) return next(new createError("Not authenticated", 401));
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = await User.findById(decoded.id).select("-password"); // exclude password
+    if (!req.user) return next(new createError("User not found", 404));
+    next();
+  } catch (err) {
+    return next(new createError("Invalid token", 401));
+  }
+};
+
+// Get current logged-in user info
+app.get("/api/user/me", protect, (req, res) => {
+  res.status(200).json({
+    status: "success",
+    data: {
+      user: req.user,
+    },
+  });
+});
 
 // Global Error Handler
 app.use((err, req, res, next) => {
