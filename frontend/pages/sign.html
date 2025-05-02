@@ -114,6 +114,7 @@
 
     <script>
       // Sign In Button Click Event
+      const backendURL = "https://paatashala-backend.onrender.com";
       document
         .getElementById("signin-btn")
         .addEventListener("click", function (event) {
@@ -128,7 +129,7 @@
             password: password,
           };
 
-          fetch("/api/auth/pages/signin", {
+          fetch(`${backendURL}/api/auth/pages/signin`, {
             // Sign In API endpoint
             method: "POST",
             headers: {
@@ -175,7 +176,7 @@
             confirmPassword: repeatPassword,
           };
 
-          fetch("/api/auth/pages/signup", {
+          fetch(`${backendURL}/api/auth/pages/signin`, {
             // Sign Up API endpoint
             method: "POST",
             headers: {
