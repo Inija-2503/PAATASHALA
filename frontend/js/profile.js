@@ -64,3 +64,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Your existing save logic goes here
   });
 });
+
+document.getElementById("logoutBtn").addEventListener("click", function () {
+  // Clear any stored data if needed (e.g., localStorage or sessionStorage)
+  localStorage.clear();
+  sessionStorage.clear();
+
+  // Redirect to the sign-in page
+  window.location.href = "../pages/sign.html";  // update path if sign-in page is elsewhere
+});
